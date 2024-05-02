@@ -8,6 +8,7 @@ const Form = () => {
     const [diag, setDiag] = useState(null);
     const [filename, setfilename] = useState(null)
     const [symptomsImageURL, setSymptomsImageURL] = useState('');
+    const [imageURL, setimageURL] = useState('');
 
     const handleSubmit = async () => {
         if (file.current) {
@@ -35,8 +36,16 @@ const Form = () => {
                 form.append("file", file.current)
                 const response = await axios.post("http://localhost:5000/predict", form)
                     .then((res) => {
-                        setDiag(res.data.class)
+                        setDiag(res.data.prediction)
+
                     })
+                console.log(response);
+                const form1 = new FormData()
+                form1.append("file", file.current)
+                const response2 = await axios.post("http://localhost:5000/segment", form1).then((res) => {
+                    setimageURL(res.data)
+                })
+                console.log(response2);
             }
             catch (err) {
                 console.log(err)
@@ -71,10 +80,6 @@ const Form = () => {
             setfilename(null)
             file.current = null
         }
-
-        // setTimeout(() => {
-        //   setError(null)
-        // }, 4000)
     }
     return (
         <div class="p-2" >
@@ -112,7 +117,13 @@ const Form = () => {
 
 
             <div class="p-5" style={{ display: 'flex', justifyContent: 'center' }} >
-                {symptomsImageURL ? (<img src={symptomsImageURL} style={{ height:'100%' }} />) : <p style={{ fontWeight: '700', textAlign: 'center', fontSize: 'large' }}> No file uploaded </p>}
+                {symptomsImageURL ? (<img src={symptomsImageURL} style={{ height: '100%' }} />) : <p style={{ fontWeight: '700', textAlign: 'center', fontSize: 'large' }}> No file uploaded </p>}
+            </div>
+            <div class="p-5" style={{ display: 'flex', justifyContent: 'center' }} >
+                {imageURL ? <p style={{ fontWeight: '700', textAlign: 'center', fontSize: 'large' }}> Segmented Image </p> : ""}
+            </div>
+            <div class="p-5" style={{ display: 'flex', justifyContent: 'center' }} >
+                {imageURL ? (<img src={imageURL} style={{ height: '100%' }} />) : <p style={{ fontWeight: '700', textAlign: 'center', fontSize: 'large' }}></p>}
             </div>
 
             {
@@ -130,7 +141,9 @@ const Form = () => {
                     </p>
                 </div>)
                     : (
-                        diag
+                        <p style={{ fontWeight: '700', textAlign: 'center', fontSize: 'large' }}>
+                            The probability of you having brain tumour based on the image you have uploaded is {diag * 100}%
+                        </p>
                     )
             }
         </div >
