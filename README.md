@@ -1,5 +1,5 @@
 
-# Brain Tumor Segmentation
+# Brain Tumor Detection & Segmentation
 
 Brain Tumor Segmentation is a project focused on utilizing deep learning techniques to accurately detect and segment brain tumors from medical imaging data. By employing advanced neural network architectures such as U-Net, the project aims to not only identify the presence of tumors but also precisely delineate their boundaries within brain scans. Leveraging state-of-the-art algorithms, this initiative contributes to enhancing medical diagnosis and treatment planning by providing clinicians with detailed insights into tumor location and extent, facilitating more informed decision-making and personalized patient care.
 
