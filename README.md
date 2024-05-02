@@ -30,5 +30,6 @@ Server Side
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![ss1](https://raw.githubusercontent.com/Ishaan-Chandak/DIP_Project/main/server1.png)
+![ss2](https://raw.githubusercontent.com/Ishaan-Chandak/DIP_Project/main/server2.png)
 
