@@ -4,11 +4,13 @@ import os
 from keras.models import load_model
 import cv2
 import imutils
+from flask import send_file
+import keras.backend as K
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 # Load the Keras model
 model = load_model(os.path.join('', 'cnn-parameters-improvement-02-0.85.keras'))
-
 def crop_brain_contour(image, plot=False):
     # Convert the image to grayscale, and blur it slightly
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -77,6 +79,43 @@ def get_prediction():
     prediction = round(prediction_value, 3)
     prediction = str(prediction)
     return jsonify({'prediction': prediction})
+
+def dice_coef(y_true, y_pred, smooth=1):
+    intersection = K.sum(y_true * y_pred, axis=[1,2,3])
+    union = K.sum(y_true, axis=[1,2,3]) + K.sum(y_pred, axis=[1,2,3])
+    dice = K.mean((2. * intersection + smooth) / (union + smooth), axis=0)
+    return dice
+
+def dice_coef_loss(y_true, y_pred):
+    return 1 - dice_coef(y_true, y_pred)
+
+# Load the Keras model
+model2 = load_model(os.path.join('', 'unet_brain_mri_seg.keras'), compile=False)
+
+@app.route('/segment', methods=['POST'])
+def segment():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'})
+    file = request.files['file']
+    file.save("image.jpg")
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'})
+
+    input_image = cv2.imread("image.jpg")
+    input_image = cv2.resize(input_image, (256, 256))  # Resize to match the model input shape
+    input_image = input_image / 255  # Normalize
+    input_image = np.expand_dims(input_image, axis=0)  # Add batch dimension
+
+    prediction = model2.predict(input_image)
+    print(prediction)
+    # Threshold the predicted mask to create a binary mask
+    binary_mask = (prediction > 0.1).astype(np.uint8)
+
+    # Save the binary mask as an image using OpenCV
+    cv2.imwrite("segmentation_output.jpg", binary_mask[0] * 255)
+
+    return send_file("segmentation_output.jpg", mimetype='image/jpeg')
+
 
 
 # Run the Flask app
