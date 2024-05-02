@@ -9,6 +9,7 @@ import keras.backend as K
 import matplotlib.pyplot as plt
 import cloudinary
 import cloudinary.uploader
+from flask_cors import CORS
 
 cloudinary.config( 
   cloud_name = "djzejdmyb", 
@@ -17,9 +18,8 @@ cloudinary.config(
  secure=True
 )
 
-
-
 app = Flask(__name__)
+CORS(app)
 # Load the Keras model
 model = load_model(os.path.join('', 'cnn-parameters-improvement-02-0.85.keras'))
 def crop_brain_contour(image, plot=False):
