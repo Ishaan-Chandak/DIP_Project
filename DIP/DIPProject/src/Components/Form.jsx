@@ -77,7 +77,7 @@ const Form = () => {
         // }, 4000)
     }
     return (
-        <div class="p-2">
+        <div class="p-2" >
             <Dropzone
                 className='dropzone'
                 onDrop={(acceptedFiles) => handlefiles(acceptedFiles)}
@@ -111,8 +111,8 @@ const Form = () => {
             </Dropzone>
 
 
-            <div class="p-5">
-                {symptomsImageURL ? (<img src={symptomsImageURL} />) : <p> No file uploaded </p>}
+            <div class="p-5" style={{ display: 'flex', justifyContent: 'center' }} >
+                {symptomsImageURL ? (<img src={symptomsImageURL} style={{ height:'100%' }} />) : <p style={{ fontWeight: '700', textAlign: 'center', fontSize: 'large' }}> No file uploaded </p>}
             </div>
 
             {
