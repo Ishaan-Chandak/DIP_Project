@@ -11,7 +11,7 @@ function App() {
 
       <Form />
 
-      <div class='fixed bottom-0 w-full'>
+      <div class='bottom-0 w-full'>
         <Footer />
       </div>
     </>
