@@ -30,6 +30,10 @@ Server Side
 
 ## Screenshots
 
+# Client
+![ss1](https://raw.githubusercontent.com/Ishaan-Chandak/DIP_Project/main/client.png)
+
+# Server
 ![ss1](https://raw.githubusercontent.com/Ishaan-Chandak/DIP_Project/main/server1.png)
 ![ss2](https://raw.githubusercontent.com/Ishaan-Chandak/DIP_Project/main/server2.png)
 
