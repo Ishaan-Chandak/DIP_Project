@@ -7,6 +7,17 @@ import imutils
 from flask import send_file
 import keras.backend as K
 import matplotlib.pyplot as plt
+import cloudinary
+import cloudinary.uploader
+
+cloudinary.config( 
+  cloud_name = "djzejdmyb", 
+  api_key = "835543687866393", 
+  api_secret = "cWffQBx73k9dYzGEhdcovP6VX-o",
+ secure=True
+)
+
+
 
 app = Flask(__name__)
 # Load the Keras model
@@ -114,9 +125,9 @@ def segment():
     # Save the binary mask as an image using OpenCV
     cv2.imwrite("segmentation_output.jpg", binary_mask[0] * 255)
 
-    return send_file("segmentation_output.jpg", mimetype='image/jpeg')
+    response = cloudinary.uploader.upload("segmentation_output.jpg")
 
-
+    return response['url']
 
 # Run the Flask app
 if __name__ == '__main__':
