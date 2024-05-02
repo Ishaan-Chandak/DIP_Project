@@ -35,3 +35,10 @@ Server Side
 ![ss1](https://raw.githubusercontent.com/Ishaan-Chandak/DIP_Project/main/server1.png)
 ![ss2](https://raw.githubusercontent.com/Ishaan-Chandak/DIP_Project/main/server2.png)
 
+
+# References
+
+1.   RONNEBERGER, O.; FISCHER, P.; BROX, T. U-Net: Convolutional Networks for Biomedical Image Segmentation. arXiv preprint arXiv:1505.04597, 2015.
+
+2.   Zheng, P., Zhu, X. & Guo, W. Brain tumour segmentation based on an improved U-Net. BMC Med Imaging 22, 199 (2022).
+
